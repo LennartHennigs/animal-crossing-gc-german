@@ -50,8 +50,7 @@ output ISO's sha1 when done. Re-extracting from the source ISOs (if
    archives into a copy of the US ISO.
 
 Full technical detail — every gotcha, the exact control-code tables, and the
-reasoning behind each fix — is in `CLAUDE.md`. `FINDINGS.md` and `PLAN.md` are
-the historical narrative from earlier (now-superseded) approaches.
+reasoning behind each fix — is in `CLAUDE.md`.
 
 ## Folder layout
 

@@ -2,9 +2,9 @@
 
 Goal: rebuild the USA `GAFE01` ISO with German text extracted from the EU disc,
 for use with the OpenCrossing-Anbernic port. Status: v4 ISO verified booting
-with German text on the Anbernic (2026-07-19). `FINDINGS.md`/`PLAN.md` are
-historical narrative (incl. the superseded v1 model) — this file is the
-current-state authority.
+with German text on the Anbernic (2026-07-19). This file is the current-state
+authority; earlier debugging narrative (superseded v1 model, RARC base bug)
+lived in FINDINGS.md/PLAN.md, since deleted as redundant with the gotchas below.
 
 ## Folder layout
 
@@ -89,7 +89,7 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
 
 - #1: RARC data area base is `header[0x0C]+0x20`, NOT `header[0x08]+0x20`.
   The wrong base shifts every extracted file and produced a bogus
-  "entries start mid-word / pagination chains" model (see FINDINGS v2).
+  "entries start mid-word / pagination chains" model.
 - US table entries are END offsets (`msg[i] = data[table[i-1]:table[i]]`).
 - Messages are NOT null-terminated; control-code params may contain 0x00.
 - US entries ↔ PAL BMG messages are ~1:1 at the same index (13k byte-identical
@@ -138,7 +138,7 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
 
 ## History (v2/v3, superseded packers)
 
-`rarc.py` base bug (see FINDINGS) invalidated the v1 chain/dialog machinery.
+`rarc.py` base bug (wrong data-area base offset) invalidated the v1 chain/dialog machinery.
 v2: re-extract with fixed `rarc.py`, `p8_final_rebuild.py` (difflib
 near-identity entry map, 199-entry tag table, `MSG_BUF_MAX` 1536 guard —
 max entry 1508). v3 added the 10 secondary banks + German npc names (p10/p11).

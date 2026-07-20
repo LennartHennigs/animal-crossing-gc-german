@@ -113,7 +113,7 @@ No unreleased changes.
 Initial extraction/conversion pipeline (archive/message parsing, entry
 mapping, main dialog bank, ten secondary banks, NPC names). Superseded
 scripts and intermediate data from this phase were removed after the v4
-rebuild; see `CLAUDE.md` and `FINDINGS.md` for the historical detail,
+rebuild; see `CLAUDE.md` for the historical detail,
 including an earlier archive-parsing bug (wrong data-area base offset)
 that invalidated a whole prior modeling attempt before it was found and
 fixed.
