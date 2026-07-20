@@ -1,0 +1,10 @@
+# Source ISOs, extracted disc data, and build output are large and/or
+# regenerable via build.sh from isos/ + extracted/ (see CLAUDE.md).
+isos/
+extracted/
+build/
+output/
+
+.DS_Store
+__pycache__/
+.claude/settings.local.json
