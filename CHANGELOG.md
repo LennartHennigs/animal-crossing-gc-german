@@ -8,7 +8,21 @@ notes (`1`–`11`), not semantic-versioned releases.
 
 ## [Unreleased]
 
-No unreleased changes.
+### Added
+
+- `LICENSE` — MIT, covering this project's own tooling.
+
+### Removed
+
+- Vendored `ref/` directory (ac-decomp source and Cuyler36's Animal Crossing
+  Text Editor). Reference-only, unused by the build, and redistributing it was
+  a licensing problem — the Text Editor ships no license and bundled
+  game-derived font assets. Both upstreams stay linked from the README.
+
+### Changed
+
+- README and `CLAUDE.md` updated for public release: MIT license status,
+  `ref/` now pointed to upstream instead of vendored.
 
 ## [11] - 2026-07-20
 

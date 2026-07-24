@@ -5,6 +5,10 @@ for use with the OpenCrossing-Anbernic port. Status: v4 ISO verified booting
 with German text on the Anbernic (2026-07-19). This file is the current-state
 authority; earlier debugging narrative (superseded v1 model, RARC base bug)
 lived in FINDINGS.md/PLAN.md, since deleted as redundant with the gotchas below.
+Public repo (MIT, see `LICENSE`); `README.md` is the public entry point. Ship
+no game assets or disc data — only tooling. Don't re-vendor `ref/`: those
+third-party sources (unlicensed Cuyler36 editor; CC0 ac-decomp) were removed
+for release, link upstream instead (see the folder-layout reference row).
 
 ## Folder layout
 
