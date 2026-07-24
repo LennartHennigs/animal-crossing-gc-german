@@ -61,7 +61,12 @@ reasoning behind each fix — is in `CLAUDE.md`.
 | `maps/` | Entry/tag mapping JSONs | **yes** — `entry_map_v2.json` isn't regenerable by the current scripts |
 | `build/` | Rebuilt text banks | no (regenerated) |
 | `output/` | Final arcs + ISO | no (regenerated) |
-| `ref/` | Third-party reference sources (ac-decomp, Cuyler36's Animal Crossing Text Editor) — not written by this project, kept for the control-code/charmap tables they document | yes |
+
+The control-code semantics, ARAM layout, and charmap/control-code tables this
+project relies on are documented in the upstream reference projects linked
+below — see [ACreTeam/ac-decomp](https://github.com/ACreTeam/ac-decomp) and
+[Cuyler36/Animal-Crossing-Text-Editor](https://github.com/Cuyler36/Animal-Crossing-Text-Editor)
+directly rather than a vendored copy here.
 
 ## Credits / references
 
@@ -72,8 +77,11 @@ reasoning behind each fix — is in `CLAUDE.md`.
 - [GabeConway/OpenCrossing-Anbernic](https://github.com/GabeConway/OpenCrossing-Anbernic) —
   the native port this ISO targets.
 
-## License / status
+## License
 
-Personal hobby project, no license file yet — treat as all-rights-reserved
-pending a decision. Contains no game assets or copyrighted disc data; only
-tooling to convert your own legally-owned discs.
+The tooling in this repository is released under the [MIT License](LICENSE).
+
+The license covers only this project's own code. It contains no game assets or
+copyrighted disc data — only tooling to convert your own legally-owned discs.
+Animal Crossing and its data are the property of Nintendo; the reference
+projects credited above retain their respective licenses.
