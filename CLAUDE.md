@@ -66,6 +66,7 @@ gc_fst.py's CLI is disc-only — use `tgc_extract` in p10
 
 | Script | Purpose |
 |---|---|
+| `config.py` | Shared ISO filenames (`US_ISO`, `EU_ISO`, `OUT_ISO`) — the single place to edit if yours differ; `build.sh` reads them via `python3 -c "import config; ..."` |
 | `gc_fst.py` | List/extract files from a GameCube ISO (`ls`/`x` modes) |
 | `rarc.py` | List/extract files from a RARC `.arc` archive |
 | `msglib.py` | Shared parsing: US string tables (end-offset semantics!), PAL BMG (`ROOT`+`MESGbmg1`), control-code stripping, `CC_SIZE` table |

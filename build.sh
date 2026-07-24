@@ -10,4 +10,4 @@ python3 p11_rebuild_banks.py   # 10 secondary banks
 python3 p13_compact_pack.py    # compact arcs + ISO
 
 echo
-shasum "output/Animal Crossing (USA) [German].iso"
+shasum "$(python3 -c 'import config; print(config.OUT_ISO)')"

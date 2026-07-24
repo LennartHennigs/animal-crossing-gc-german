@@ -9,15 +9,13 @@ on the Anbernic). Here the data area is rebuilt compactly: each file's blob
 sequentially 32-byte-aligned, entries and header lengths recomputed.
 
 Output: output/forest_1st_de_v4.arc, output/forest_2nd_de_v4.arc,
-        output/Animal Crossing (USA) [German].iso (overwritten)
+        and the final ISO (config.OUT_ISO, overwritten).
 """
 import os, struct, shutil
 import rarc
 from gc_fst import u32, parse_disc, read_fst
 from msglib import BANKS
-
-US_ISO = "isos/Animal Crossing (USA).iso"
-OUT_ISO = "output/Animal Crossing (USA) [German].iso"
+from config import US_ISO, OUT_ISO
 
 def p32(b, o, v): struct.pack_into(">I", b, o, v)
 

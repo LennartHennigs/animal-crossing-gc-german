@@ -1,13 +1,15 @@
-# Animal Crossing (GameCube) — German localization for OpenCrossing-Anbernic
+# Animal Crossing (GameCube) — German localization of the US (GAFE01) release
 
 Rebuilds the USA `GAFE01` Animal Crossing ISO with German text extracted from
-the EU (PAL) disc, for use with the
+the EU (PAL) disc. The US disc's dialog engine is kept as-is (control codes,
+choice menus, cutscene triggers); only the text and a handful of PAL-only
+presentation tags (colors, scale) are translated across. The result is an
+ordinary US ISO — usable on real hardware, in an emulator, or with the
 [OpenCrossing-Anbernic](https://github.com/GabeConway/OpenCrossing-Anbernic)
-native port on Anbernic handhelds. The US disc's dialog engine is kept as-is
-(control codes, choice menus, cutscene triggers); only the text and a handful
-of PAL-only presentation tags (colors, scale) are translated across.
+native port.
 
-Verified booting with German text on real Anbernic hardware.
+Verified booting with German text on real Anbernic hardware (via the
+OpenCrossing-Anbernic port).
 
 **You need your own legally-owned copies** of the USA and EU (PAL) Animal
 Crossing discs to use this — none are included or distributed here.
@@ -18,6 +20,10 @@ Crossing discs to use this — none are included or distributed here.
 - Your own ISOs:
   - `isos/Animal Crossing (USA).iso`
   - `isos/Animal Crossing (Europe) (En,Fr,De,Es,It).nkit.iso`
+
+  If your filenames differ, edit them once in `config.py` (`US_ISO`, `EU_ISO`,
+  `OUT_ISO`). An NKit `.nkit.iso` works; compressed `.nkit.gcz`/`.rvz` do not —
+  convert those back to `.iso` first.
 
 ## Quick start
 
