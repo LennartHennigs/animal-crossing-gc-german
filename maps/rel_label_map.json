@@ -1,0 +1,440 @@
+[
+ {
+  "i": 0,
+  "en": "Open",
+  "de_hex": "1766666e656e",
+  "src": "de-module"
+ },
+ {
+  "i": 1,
+  "en": "Give",
+  "de_hex": "4162676562656e",
+  "src": "de-table"
+ },
+ {
+  "i": 2,
+  "en": "Take it",
+  "de_hex": "4e65686d656e",
+  "src": "de-table"
+ },
+ {
+  "i": 3,
+  "en": "Yes",
+  "de_hex": "4a61",
+  "src": "de-table"
+ },
+ {
+  "i": 4,
+  "en": "Erect",
+  "de_hex": "4175667374656c6c656e",
+  "src": "de-table"
+ },
+ {
+  "i": 5,
+  "en": "Yes",
+  "de_hex": "4a61",
+  "src": "de-table"
+ },
+ {
+  "i": 6,
+  "en": "Sell",
+  "de_hex": "5665726b617566656e",
+  "src": "de-table"
+ },
+ {
+  "i": 7,
+  "en": "Sell All",
+  "de_hex": "416c6c6573207665726b617566656e",
+  "src": "de-table"
+ },
+ {
+  "i": 8,
+  "en": "Send",
+  "de_hex": "56657273656e64656e",
+  "src": "de-table"
+ },
+ {
+  "i": 9,
+  "en": "Rewrite",
+  "de_hex": "4e65752073636872656962656e",
+  "src": "manual"
+ },
+ {
+  "i": 10,
+  "en": "Put on Wall",
+  "de_hex": "416e206469652057616e64",
+  "src": "de-table"
+ },
+ {
+  "i": 11,
+  "en": "Put Away",
+  "de_hex": "56657273746175656e",
+  "src": "de-table"
+ },
+ {
+  "i": 12,
+  "en": "Plant",
+  "de_hex": "50666c616e7a656e",
+  "src": "de-table"
+ },
+ {
+  "i": 13,
+  "en": "Drop",
+  "de_hex": "41626c6567656e",
+  "src": "de-table"
+ },
+ {
+  "i": 14,
+  "en": "Throw Away",
+  "de_hex": "57656777657266656e",
+  "src": "de-table"
+ },
+ {
+  "i": 15,
+  "en": "Give Away",
+  "de_hex": "566572736368656e6b656e",
+  "src": "de-table"
+ },
+ {
+  "i": 16,
+  "en": "Grab",
+  "de_hex": "4e65686d656e",
+  "src": "de-table"
+ },
+ {
+  "i": 17,
+  "en": "Write Letter",
+  "de_hex": "42726965662073636872656962656e",
+  "src": "de-table"
+ },
+ {
+  "i": 18,
+  "en": "Set Price",
+  "de_hex": "507265697320666573746c6567656e",
+  "src": "de-table"
+ },
+ {
+  "i": 19,
+  "en": "Present",
+  "de_hex": "4765736368656e6b",
+  "src": "de-table"
+ },
+ {
+  "i": 20,
+  "en": "Display",
+  "de_hex": "4175737374656c6c656e",
+  "src": "de-table"
+ },
+ {
+  "i": 21,
+  "en": "Quit",
+  "de_hex": "4265656e64656e",
+  "src": "de-table"
+ },
+ {
+  "i": 22,
+  "en": "Drop",
+  "de_hex": "41626c6567656e",
+  "src": "de-table"
+ },
+ {
+  "i": 23,
+  "en": "Spread on Floor",
+  "de_hex": "4175662064656e20426f64656e",
+  "src": "de-table"
+ },
+ {
+  "i": 24,
+  "en": "Read",
+  "de_hex": "4c6573656e",
+  "src": "de-table"
+ },
+ {
+  "i": 25,
+  "en": "Give",
+  "de_hex": "4162676562656e",
+  "src": "de-table"
+ },
+ {
+  "i": 26,
+  "en": "100",
+  "de_hex": "313030",
+  "src": "de-table"
+ },
+ {
+  "i": 27,
+  "en": "1000",
+  "de_hex": "312e303030",
+  "src": "de-table"
+ },
+ {
+  "i": 28,
+  "en": "10000",
+  "de_hex": "31302e303030",
+  "src": "de-table"
+ },
+ {
+  "i": 29,
+  "en": "30000",
+  "de_hex": "33302e303030",
+  "src": "de-table"
+ },
+ {
+  "i": 30,
+  "en": "PriceÓ:ÓÓÓÓÓÓÓ",
+  "de_hex": "5072656973d33ad3d3d3d3d3d3d3",
+  "src": "de-table"
+ },
+ {
+  "i": 31,
+  "en": "Bells",
+  "de_hex": "537472732e",
+  "src": "de-table"
+ },
+ {
+  "i": 32,
+  "en": "Give",
+  "de_hex": "4162676562656e",
+  "src": "de-table"
+ },
+ {
+  "i": 33,
+  "en": "Grab All",
+  "de_hex": "416c6c65206e65686d656e",
+  "src": "de-table"
+ },
+ {
+  "i": 34,
+  "en": "Grab One",
+  "de_hex": "45696e6573206e65686d656e",
+  "src": "de-table"
+ },
+ {
+  "i": 35,
+  "en": "Grab",
+  "de_hex": "4e65686d656e",
+  "src": "de-table"
+ },
+ {
+  "i": 36,
+  "en": "Order",
+  "de_hex": "42657374656c6c656e",
+  "src": "de-table"
+ },
+ {
+  "i": 37,
+  "en": "Bury",
+  "de_hex": "56657267726162656e",
+  "src": "de-table"
+ },
+ {
+  "i": 38,
+  "en": "Release",
+  "de_hex": "467265696c617373656e",
+  "src": "de-table"
+ },
+ {
+  "i": 39,
+  "en": "Let Go",
+  "de_hex": "4c6f736c617373656e",
+  "src": "de-table"
+ },
+ {
+  "i": 40,
+  "en": "Open",
+  "de_hex": "1766666e656e",
+  "src": "de-module"
+ },
+ {
+  "i": 41,
+  "en": "????",
+  "de_hex": "3f3f3f3f",
+  "src": "de-table"
+ },
+ {
+  "i": 42,
+  "en": "Yes",
+  "de_hex": "4a61",
+  "src": "de-table"
+ },
+ {
+  "i": 43,
+  "en": "No",
+  "de_hex": "4e65696e",
+  "src": "manual"
+ },
+ {
+  "i": 44,
+  "en": "Throw All Away",
+  "de_hex": "416c6c65732077656777657266656e",
+  "src": "de-table"
+ },
+ {
+  "i": 45,
+  "en": "Yes",
+  "de_hex": "4a61",
+  "src": "de-table"
+ },
+ {
+  "i": 46,
+  "en": "Copy All",
+  "de_hex": "416c6c6573206b6f70696572656e",
+  "src": "de-table"
+ },
+ {
+  "i": 47,
+  "en": "Swap",
+  "de_hex": "417573746175736368656e",
+  "src": "de-table"
+ },
+ {
+  "i": 48,
+  "en": "Listen",
+  "de_hex": "416e688c72656e",
+  "src": "de-table"
+ },
+ {
+  "i": 49,
+  "en": "Take out",
+  "de_hex": "486572617573686f6c656e",
+  "src": "de-table"
+ },
+ {
+  "i": 50,
+  "en": "Take out all",
+  "de_hex": "416c6c6520686572617573686f6c656e",
+  "src": "de-table"
+ },
+ {
+  "i": 51,
+  "en": "Give",
+  "de_hex": "4162676562656e",
+  "src": "de-table"
+ },
+ {
+  "i": 52,
+  "en": "Use",
+  "de_hex": "56657277656e64656e",
+  "src": "de-table"
+ },
+ {
+  "i": 53,
+  "en": "Drop",
+  "de_hex": "41626c6567656e",
+  "src": "de-table"
+ },
+ {
+  "i": 54,
+  "en": "Swap",
+  "de_hex": "417573746175736368656e",
+  "src": "de-table"
+ },
+ {
+  "i": 55,
+  "en": "Use on Clothes",
+  "de_hex": "416c73204f7574666974",
+  "src": "de-table"
+ },
+ {
+  "i": 56,
+  "en": "Use on Umbrella",
+  "de_hex": "416c732053636869726d",
+  "src": "de-table"
+ },
+ {
+  "i": 57,
+  "en": "Use on Walls",
+  "de_hex": "416c732057616e64",
+  "src": "de-table"
+ },
+ {
+  "i": 58,
+  "en": "Use on Floor",
+  "de_hex": "416c7320426f64656e",
+  "src": "de-table"
+ },
+ {
+  "i": 59,
+  "en": "Grab",
+  "de_hex": "4e65686d656e",
+  "src": "de-table"
+ },
+ {
+  "i": 60,
+  "en": "Use",
+  "de_hex": "56657277656e64656e",
+  "src": "de-table"
+ },
+ {
+  "i": 61,
+  "en": "Use",
+  "de_hex": "56657277656e64656e",
+  "src": "de-table"
+ },
+ {
+  "i": 62,
+  "en": "Drop",
+  "de_hex": "41626c6567656e",
+  "src": "de-table"
+ },
+ {
+  "i": 63,
+  "en": "Drop as Umbrella",
+  "de_hex": "416c732053636869726d",
+  "src": "de-table"
+ },
+ {
+  "i": 64,
+  "en": "Drop as Clothes",
+  "de_hex": "416c73204f7574666974",
+  "src": "de-table"
+ },
+ {
+  "i": 65,
+  "en": "Basic Paste",
+  "de_hex": "4e6f726d616c",
+  "src": "de-table"
+ },
+ {
+  "i": 66,
+  "en": "Mix it up",
+  "de_hex": "447572636865696e616e646572",
+  "src": "de-table"
+ },
+ {
+  "i": 67,
+  "en": "Remove",
+  "de_hex": "5292636b675d6e676967",
+  "src": "de-table"
+ },
+ {
+  "i": 68,
+  "en": "Drop All",
+  "de_hex": "416c6c65732061626c6567656e",
+  "src": "de-table"
+ },
+ {
+  "i": 69,
+  "en": "That's Fine",
+  "de_hex": "496e204f72646e756e6721",
+  "src": "de-table"
+ },
+ {
+  "i": 70,
+  "en": "Never mind",
+  "de_hex": "4c6965626572206e6963687421",
+  "src": "de-table"
+ },
+ {
+  "i": 71,
+  "en": "Swap",
+  "de_hex": "417573746175736368656e",
+  "src": "de-table"
+ },
+ {
+  "i": 72,
+  "en": "Give",
+  "de_hex": "4162676562656e",
+  "src": "de-table"
+ }
+]

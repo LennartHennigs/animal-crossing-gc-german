@@ -58,7 +58,14 @@ def build_iso(arcs):
             print(f"{name} -> {hex(new_off)} ({len(blob)})")
         f.seek(fst_off)
         f.write(fst)
+        # Pad the trimmed image tail to a 0x8000 sector. The last appended file
+        # (foresta.rel.szs) has a non-32-byte-aligned size, so the loader rounds
+        # its tail DVD-read up and reads a few bytes past the file; without this
+        # pad that runs past EOF -> "disc could not be read" at boot.
         f.seek(0, 2)
+        pad = (-f.tell()) % 0x8000
+        if pad:
+            f.write(b"\0" * pad)
         print("iso size:", f.tell())
 
 def blob(path): return open(path, "rb").read()
@@ -81,4 +88,9 @@ if __name__ == "__main__":
     for out, new in (("forest_2nd", a2), ("forest_1st", a1)):
         was = os.path.getsize(f"extracted/us_{out}.arc")
         print(f"output/{out}_de_v4.arc: {len(new)} (US was {was})")
-    build_iso({"forest_2nd.arc": a2, "forest_1st.arc": a1})
+
+    arcs = {"forest_2nd.arc": a2, "forest_1st.arc": a1}
+    rel = "output/foresta_de.rel.szs"   # produced by p14; optional
+    if os.path.exists(rel):
+        arcs["foresta.rel.szs"] = blob(rel)
+    build_iso(arcs)

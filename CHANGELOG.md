@@ -10,8 +10,13 @@ Version numbers are the internal build tags used in commit/testing notes
 
 ### Added
 
+- German **menu-command labels** (`Grab`→`Nehmen`, `Quit`→`Beenden`, `Give Away`→`Verschenken`, item sub-menus, `Yes/No`…), patched into the `foresta.rel` main module — these live outside the 11 message banks, so the prior pipeline left them English. New: `relpack.py` (Yaz0), `make_rel_label_map.py` (locates the label tables by content anchor and copies German bytes verbatim), `p14_patch_rel.py`, `maps/rel_label_map.json`.
 - `LICENSE` — MIT, covering this project's own tooling.
 - `config.py` — central ISO filenames (`US_ISO`, `EU_ISO`, `OUT_ISO`), consumed by `p13` and `build.sh`.
+
+### Fixed
+
+- Sector-pad the trimmed ISO tail; the newly-appended `foresta.rel.szs` (non-32-byte-aligned, last file) made the loader's tail read run past EOF → "disc could not be read" at boot.
 
 ### Changed
 

@@ -11,8 +11,11 @@ native port.
 Verified booting with German text on real Anbernic hardware (via the
 OpenCrossing-Anbernic port).
 
-> **⚠️ Work in progress.** Some UI elements still show English text, and this
-> definitely needs more testing. Expect rough edges — bug reports welcome.
+> **⚠️ Work in progress.** Dialog and the action/selection menu commands are
+> German; some UI elements rendered as **bitmap textures** (the pocket
+> `Bells`/`Letters`/`Items` headers, the on-screen button-guide labels) still
+> show English, and this definitely needs more testing. Expect rough edges —
+> bug reports welcome.
 
 If you find this project helpful please consider giving it a ⭐️ at
 [GitHub](https://github.com/LennartHennigs/animal-crossing-gc-german) and/or
@@ -61,6 +64,11 @@ output ISO's sha1 when done. Re-extracting from the source ISOs (if
 4. Rebuild the two RARC archives that hold these banks compactly (matching
    the ARAM budget the port allocates for them) and patch the rebuilt
    archives into a copy of the US ISO.
+5. Translate the action/selection **menu-command labels** (`Grab`, `Quit`,
+   `Give Away`, `Yes/No`, …), which live as strings baked into the `foresta.rel`
+   main module rather than the text banks: locate the label tables by content
+   anchor in both the US and German modules, copy the German bytes verbatim,
+   and re-pack the module into the ISO.
 
 Full technical detail — every gotcha, the exact control-code tables, and the
 reasoning behind each fix — is in `CLAUDE.md`.
@@ -71,7 +79,7 @@ reasoning behind each fix — is in `CLAUDE.md`.
 |---|---|---|
 | `isos/` | Your source ISOs (not included) | no |
 | `extracted/` | Raw disc/archive extracts | no (regenerated) |
-| `maps/` | Entry/tag mapping JSONs | **yes** — `entry_map_v2.json` isn't regenerable by the current scripts |
+| `maps/` | Entry/tag/label mapping JSONs | **yes** — `entry_map_v2.json` isn't regenerable by the current scripts (`rel_label_map.json` is, via `make_rel_label_map.py`) |
 | `build/` | Rebuilt text banks | no (regenerated) |
 | `output/` | Final arcs + ISO | no (regenerated) |
 
