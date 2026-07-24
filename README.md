@@ -11,6 +11,13 @@ native port.
 Verified booting with German text on real Anbernic hardware (via the
 OpenCrossing-Anbernic port).
 
+> **⚠️ Work in progress.** Some UI elements still show English text, and this
+> definitely needs more testing. Expect rough edges — bug reports welcome.
+
+If you find this project helpful please consider giving it a ⭐️ at
+[GitHub](https://github.com/LennartHennigs/animal-crossing-gc-german) and/or
+[buy me a ☕️](https://ko-fi.com/lennart0815).
+
 **You need your own legally-owned copies** of the USA and EU (PAL) Animal
 Crossing discs to use this — none are included or distributed here.
 
