@@ -1,8 +1,11 @@
 # Animal Crossing German localization — working folder
 
 Goal: rebuild the USA `GAFE01` ISO with German text extracted from the EU disc,
-for use with the OpenCrossing-Anbernic port. Status: v4 ISO verified booting
-with German text on the Anbernic (2026-07-19). This file is the current-state
+for use with the OpenCrossing-Anbernic port. Status: v12 ISO — German dialog +
+action/selection menu-command labels (patched into `foresta.rel`); verified in
+Dolphin on a fresh game (2026-07-25). v4 first verified booting on real Anbernic
+hardware (2026-07-19). Pocket-header/button-guide **textures** stay English
+(deferred — see "UI element sources"). This file is the current-state
 authority; earlier debugging narrative (superseded v1 model, RARC base bug)
 lived in FINDINGS.md/PLAN.md, since deleted as redundant with the gotchas below.
 Public repo (MIT, see `LICENSE`); `README.md` is the public entry point. Ship
@@ -123,8 +126,8 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
   table2/3 align 1:1 except one German-only "Zurück" record (skip it), and it
   lists "Drop as Umbrella/Clothes" reversed vs US (map per US slot → swap). The
   map carries the expected English per slot so p14 aborts on a mismatched
-  revision instead of corrupting the module. HUD *button-guide* labels
-  (Lights/Camera/e-Reader/Erase/Play) are BTI textures, not strings — deferred.
+  revision instead of corrupting the module. (Pocket headers & HUD button-guide
+  labels are textures, not strings — see "UI element sources" below.)
 - npc_name_str_table.bin: fixed 8-byte name records, US/DE same size.
 - forest_1st/2nd.arc data areas load whole into a fixed ARAM pool (all files
   attr 0x21; header 0x18 = ARAM length). Keep them compact — appending data
@@ -170,8 +173,8 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
   when parsing PAL data, but STRIP them for the US engine
   (`p11.strip_grammar_prefix`) — mString copies these strings raw into
   fixed-size name fields, so prefixes render as junk and kill the padding
-  (the "bonnii Ä…" town-name bug). Charmap note: low bytes are glyphs
-  (0x02='Ä', 0x92='ü'), hence the constrained match.
+  (the "bonnii Ä…" town-name bug). Charmap: low bytes are glyphs (full byte
+  table under the PAL-encoding gotcha above), hence the constrained match.
 
 ## UI element sources: strings vs textures (and the German module layout)
 
