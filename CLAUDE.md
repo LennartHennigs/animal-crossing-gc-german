@@ -136,6 +136,10 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
   `build_iso` pads the image to the next 0x8000 sector to fix it (the arcs never
   hit this: their sizes are 32-byte aligned and they aren't last). Not
   revision-dependent — it's purely output-image layout.
+- Verify translation changes on a **fresh game / cold boot**. An existing
+  savegame or Dolphin save state caches the old module's strings in its state,
+  so patched labels still render English until a new game — cost a debugging
+  cycle here. (Same spirit as the Anbernic "no save states" rule.)
 - Flow-critical control codes (choice menu 0x0D, next-message links 0x0E-0x15,
   select strings 0x16-0x18, 0x5E/0x62/0x63/0x77-0x7A) can't be learned from PAL
   tags: select-string payloads vary per message and PAL restructures some
@@ -168,6 +172,56 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
   fixed-size name fields, so prefixes render as junk and kill the padding
   (the "bonnii Ä…" town-name bug). Charmap note: low bytes are glyphs
   (0x02='Ä', 0x92='ü'), hence the constrained match.
+
+## UI element sources: strings vs textures (and the German module layout)
+
+On-screen text comes from three different places — know which before trying to
+translate anything:
+
+- **Dialog / letters / signs** → the 11 message banks in `forest_1st/2nd.arc`
+  (the p8–p13 pipeline). Already German.
+- **Action/selection menu commands** (`Grab`/`Quit`/`Give Away`/`Yes`, item
+  sub-menus…) → **strings** in fixed 20-byte records inside `foresta.rel`
+  (p14). Now German. See the menu-label gotcha above.
+- **Pocket headers** (`Bells`/`Letters`/`Items`) and the **HUD button-guide
+  labels** (`Lights`/`Camera`/`e-Reader`/`Erase`/`Play`) → **BTI/RGB5A3
+  textures**, NOT strings. Still English. Patching strings for these does
+  nothing — verified the hard way. **Decision: leave the textures alone for
+  now** (findings documented below as the Group B roadmap; not implemented).
+
+To decide text-vs-texture without guessing, consult ac-decomp (not vendored):
+GitHub code-search `repo:ACreTeam/ac-decomp`. A `*_tex` symbol = texture
+(e.g. `inv_mwin_items_tex`/`inv_mwin_letters_tex`/`inv_mwin_bells_tex` in
+`src/data/model/inv_mwin.c` are the pocket headers). A quoted string literal in
+`.c` = text.
+
+**German build is structured differently from US.** US bakes everything into one
+`foresta.rel` (15.6 MB decompressed). The German (PAL) build splits into
+`foresta`/`forestd`/`foresti`/`foresto.rel` (foresta only 4.5 MB) — so there is
+**no wholesale module swap**. Localized German header textures live in
+`forestd.rel` (`inv_mwin_items/letters/bells_tex`, 0x200 each — same size as the
+US ones, so a byte-for-byte swap into `foresta.rel` is viable). Pull any German
+module/map from `extracted/german.tgc` via the p10 TGC-extract logic.
+
+**REL / Yaz0 mechanics** (for editing modules):
+- `relpack.py` handles the Yaz0 wrapper; `foresta.map`/`forestd.map` (extract
+  from the ISO / german.tgc) are the code+data symbol maps — grep them to
+  locate named symbols (functions, textures) with address+size.
+- Address→file-offset: **US `foresta.rel` sections are linked at their file
+  offset** (map address == file offset — identity). **`forestd.rel` is NOT
+  identity** — parse its REL section table (0x0C=numSections, 0x10=sectionInfo;
+  entries are `(offset&~3, len)`) to resolve. Verify any extracted texture by
+  decoding it to an image before swapping.
+
+### Group B roadmap (pocket-header texture swap — deferred, NOT done)
+Left untouched for now; documented so it can be picked up later. US targets in
+`foresta.rel` (identity offsets): `inv_mwin_items_tex` @0x43b960,
+`_letters_tex` @0x43bb60, `_bells_tex` @0x43bd60 (0x200 each). German sources in
+`forestd.rel`: `inv_mwin_items/letters/bells_tex` @0x3a8ca0/0x3a8ea0/0x3a90a0
+(0x200 each; file offset needs section-table resolution — naive identity hits
+0xbb filler). Plan: resolve forestd offsets → extract → decode+verify the German
+bitmaps → in-place same-size swap into `foresta.rel` → reuse p14 re-Yaz0 path →
+build → test on a FRESH game.
 
 ## History (v2/v3, superseded packers)
 
