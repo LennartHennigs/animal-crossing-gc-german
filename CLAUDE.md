@@ -1,11 +1,14 @@
 # Animal Crossing German localization — working folder
 
 Goal: rebuild the USA `GAFE01` ISO with German text extracted from the EU disc,
-for use with the OpenCrossing-Anbernic port. Status: v12 ISO — German dialog +
-action/selection menu-command labels (patched into `foresta.rel`); verified in
-Dolphin on a fresh game (2026-07-25). v4 first verified booting on real Anbernic
-hardware (2026-07-19). Pocket-header/button-guide **textures** stay English
-(deferred — see "UI element sources"). This file is the current-state
+for use with the OpenCrossing-Anbernic port. Status: v13 ISO — German dialog +
+action/selection menu-command labels + **in-game item names** (all patched into
+`foresta.rel`). v12 (labels only) verified in Dolphin on a fresh game
+(2026-07-25). v4 first verified booting on real Anbernic hardware (2026-07-19).
+Item names (v13) added 2026-07-30 via p15, not yet device-verified; p15 also
+suppresses the item articles (bare names — the US a/an/the model can't do German
+gender/case). Pocket-header/button-guide **textures** stay English (deferred —
+see "UI element sources"). This file is the current-state
 authority; earlier debugging narrative (superseded v1 model, RARC base bug)
 lived in FINDINGS.md/PLAN.md, since deleted as redundant with the gotchas below.
 Public repo (MIT, see `LICENSE`); `README.md` is the public entry point. Ship
@@ -34,14 +37,15 @@ house). Select = port settings overlay, Select+Start = quit.
 ## Reproduce
 
 ```bash
-./build.sh   # p8 -> p10 -> p11 -> p14 -> p13, prints the final ISO sha1
+./build.sh   # p8 -> p10 -> p11 -> p14 -> p15 -> p13, prints the final ISO sha1
 ```
 
 Verified reproducible: full re-run yields a bit-identical ISO
-(sha1 `296f945caea92f506cb36e2891f12a2a9b0ed1ae`, v12 build: v11 + German menu
-labels patched into `foresta.rel` by p14; the ISO grew 32.7 MB → 39.0 MB because
-`build_iso` appends the re-Yaz0'd module and the stock one stays as dead disc
-bytes, like the appended arcs). The pre-rel sha1 was
+(sha1 `3a00f5555c608b8f69f12b666bd023cd8e6b2d27`, v13 build: v12 + German item
+names patched into `foresta.rel` by p15). The prior v12 sha1 was
+`296f945caea92f506cb36e2891f12a2a9b0ed1ae` (v11 + German menu labels by p14; the
+ISO grew 32.7 MB → 39.0 MB because `build_iso` appends the re-Yaz0'd module and
+the stock one stays as dead disc bytes, like the appended arcs). The pre-rel sha1 was
 `fed8736178fe9e66d3e206a10fd6e7cb530e72dd` (v11: v10 + US-empty bank slots stay
 empty — difflib gap-fill had planted German strings in them; the engine treats
 size 0 as "clear to spaces" and name-entry prefill reads these, so a filled slot
@@ -79,7 +83,8 @@ gc_fst.py's CLI is disc-only — use `tgc_extract` in p10
 | `msglib.py` | Shared parsing: US string tables (end-offset semantics!), PAL BMG (`ROOT`+`MESGbmg1`), control-code stripping, `CC_SIZE` table |
 | `relpack.py` | Yaz0 (de)compress for `foresta.rel.szs`; bounded greedy encoder (matches stock ~40% ratio), `store` all-literal fallback, `check` self-test |
 | `make_rel_label_map.py` | Regenerates `maps/rel_label_map.json`: locates the menu-command record tables in the US and German modules *by content anchor* (no hardcoded offsets), aligns them, copies German bytes verbatim (charmap-correct) |
-| `p8` → `p10` → `p11` → `p14` → `p13` | Pipeline, in order: main dialog bank → per-bank extract (into `build/banks/`) → rebuild 10 secondary banks → German menu labels into `foresta.rel` → compact v4 arcs + rel + final ISO |
+| `make_rel_item_map.py` | Regenerates `maps/rel_item_map.json`: the 18 item-name tables (`itemName_*` + `ftrName*`). Reads both linker maps (`foresta.map` from US ISO, `forestd.map` from `german.tgc` — German item names live in the **forestd** overlay, not foresta) for per-table (vaddr,size), calibrates each module's base by content anchor, and copies German bytes slot-for-slot (2271 names; sizes/order identical both sides) |
+| `p8` → `p10` → `p11` → `p14` → `p15` → `p13` | Pipeline, in order: main dialog bank → per-bank extract (into `build/banks/`) → rebuild 10 secondary banks → German menu labels into `foresta.rel` → German item names into `foresta.rel` → compact v4 arcs + rel + final ISO |
 
 ## Intermediate artifacts (in dependency order)
 
@@ -94,7 +99,8 @@ gc_fst.py's CLI is disc-only — use `tgc_extract` in p10
 | `maps/entry_map_v2.json`, `maps/tag_map_v2_final.json` | v2 scripts (deleted) / `p8` | Current entry mapping + PAL-tag → US-code table |
 | `build/new_message_data*.bin`, `build/banks/new_*` | p8 / p11 | Rebuilt German banks |
 | `maps/rel_label_map.json` | `make_rel_label_map.py` | 73 menu-command labels: US English (per slot, for validation) → German bytes; `src` = de-table / de-module / manual |
-| `output/foresta_de.rel.szs` | `p14_patch_rel.py` | US `foresta.rel` with German menu labels, re-Yaz0'd |
+| `maps/rel_item_map.json` | `make_rel_item_map.py` | 2271 item names across 18 tables: per-table `vaddr`/`size` + slots `{i, en, de_hex}` (US English per slot, for p15's assertion → German bytes) |
+| `output/foresta_de.rel.szs` | `p14_patch_rel.py` → `p15_patch_rel_items.py` | US `foresta.rel` with German menu labels (p14) **and** item names (p15, patches p14's output in place), re-Yaz0'd |
 | `output/forest_*_de_v4.arc` | `p13_compact_pack.py` | Compact v4 arcs (ARAM-safe) |
 | `output/Animal Crossing (USA) [German].iso` | `p13_compact_pack.py` | Final output (39.0 MB) |
 
@@ -128,6 +134,24 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
   map carries the expected English per slot so p14 aborts on a mismatched
   revision instead of corrupting the module. (Pocket headers & HUD button-guide
   labels are textures, not strings — see "UI element sources" below.)
+- Item names (fruit/tools/clothing/furniture) are ALSO in `foresta.rel`, as the
+  18 `itemName_*` + `ftrName*` tables of fixed 16-byte space-padded records — p15
+  patches them like p14 does labels. Non-obvious: the German bytes are NOT in the
+  German `foresta` overlay (it lacks these tables) and NOT in the message banks —
+  they live in a **different PAL overlay, `forestd.rel.szs`** inside `german.tgc`
+  (PAL splits US's single `foresta` into foresta/d/i/o). Both linker maps
+  (`foresta.map`, `forestd.map`) list all 18 tables with byte-identical sizes and
+  identical slot order, so the harvest is a straight verbatim slot-for-slot copy
+  (charmap-correct, same as labels). make_rel_item_map.py calibrates each
+  module's vaddr→file base from a content anchor (US "airmail paper", DE
+  "Kokosnuss") and validates every table lands on printable records.
+  Grammar articles (`itemArt_*`/`ftrArt`): the string bank localizes a/an/the to
+  ein/eine/der/die, but the article *index* is picked per item by English
+  a/an-by-vowel rules, so German gender is wrong ("eine Apfel"). The 4-slot US
+  model can't express German gender/case and `forestd` has no article table to
+  harvest, so p15 **zeroes all itemArt_*/ftrArt entries** → `mIN_get_item_article`
+  returns NONE → bare item names (no article). Excludes `itemArt_table$420` (a
+  relocated pointer array); sanity-guards each table holds only enums 0..4 first.
 - npc_name_str_table.bin: fixed 8-byte name records, US/DE same size.
 - forest_1st/2nd.arc data areas load whole into a fixed ARAM pool (all files
   attr 0x21; header 0x18 = ARAM length). Keep them compact — appending data

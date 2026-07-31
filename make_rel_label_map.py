@@ -129,7 +129,7 @@ def build(us_iso):
 
 def glyph(b):
     """Best-effort display of the game-font charmap for the review dump."""
-    m = {0x92: "ü", 0x8c: "ö", 0x5d: "ä", 0x02: "Ä", 0x17: "Ö", 0x81: "ß"}
+    m = {0x92: "ü", 0x8c: "ö", 0x5d: "ä", 0x02: "Ä", 0x17: "Ö", 0x1d: "ß", 0x81: "ß"}
     return "".join(chr(c) if 32 <= c < 127 else m.get(c, f"<{c:02x}>") for c in b)
 
 

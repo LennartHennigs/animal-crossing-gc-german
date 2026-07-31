@@ -10,6 +10,8 @@ Version numbers are the internal build tags used in commit/testing notes
 
 ### Added
 
+- German **item names** (fruit, tools, clothing, furniture — 2271 across 18 tables), patched into `foresta.rel`. Like the menu labels, these are baked into the module (not the message banks), so the port showed English ("orange", "green shirt", "wave print"). The German bytes come from a *different* PAL overlay (`forestd.rel` in `german.tgc`), where the same 18 `itemName_*`/`ftrName*` tables have byte-identical sizes and slot order — so they copy verbatim slot-for-slot (charmap-correct). New: `make_rel_item_map.py` (reads both linker maps, calibrates by content anchor, builds `maps/rel_item_map.json`), `p15_patch_rel_items.py` (patches p14's output in place, asserting English per slot).
+- **Suppressed item articles** (p15 also zeroes the `itemArt_*`/`ftrArt` tables). The string bank localizes a/an/the to ein/eine/der/die, but the article index is chosen by English a/an-by-vowel rules, so German gender came out wrong ("eine Apfel"); the US 4-slot article model can't express German gender/case. Zeroing the tables makes `mIN_get_item_article` return NONE, so items show as bare names.
 - German **menu-command labels** (`Grab`→`Nehmen`, `Quit`→`Beenden`, `Give Away`→`Verschenken`, item sub-menus, `Yes/No`…), patched into the `foresta.rel` main module — these live outside the 11 message banks, so the prior pipeline left them English. New: `relpack.py` (Yaz0), `make_rel_label_map.py` (locates the label tables by content anchor and copies German bytes verbatim), `p14_patch_rel.py`, `maps/rel_label_map.json`.
 - `LICENSE` — MIT, covering this project's own tooling.
 - `config.py` — central ISO filenames (`US_ISO`, `EU_ISO`, `OUT_ISO`), consumed by `p13` and `build.sh`.

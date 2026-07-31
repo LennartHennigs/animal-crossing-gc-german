@@ -11,11 +11,13 @@ native port.
 Verified booting with German text on real Anbernic hardware (via the
 OpenCrossing-Anbernic port).
 
-> **⚠️ Work in progress.** Dialog and the action/selection menu commands are
-> German; some UI elements rendered as **bitmap textures** (the pocket
-> `Bells`/`Letters`/`Items` headers, the on-screen button-guide labels) still
-> show English, and this definitely needs more testing. Expect rough edges —
-> bug reports welcome.
+> **⚠️ Work in progress.** Dialog, the action/selection menu commands, and
+> in-game item names (fruit, tools, clothing, furniture) are German; item
+> articles are suppressed (bare names — German gender/case can't be expressed in
+> the US engine's a/an/the model). Some UI elements rendered as **bitmap
+> textures** (the pocket `Bells`/`Letters`/`Items` headers, the on-screen
+> button-guide labels) still show English, and this definitely needs more
+> testing. Expect rough edges — bug reports welcome.
 
 If you find this project helpful please consider giving it a ⭐️ at
 [GitHub](https://github.com/LennartHennigs/animal-crossing-gc-german) and/or
@@ -69,6 +71,14 @@ output ISO's sha1 when done. Re-extracting from the source ISOs (if
    main module rather than the text banks: locate the label tables by content
    anchor in both the US and German modules, copy the German bytes verbatim,
    and re-pack the module into the ISO.
+6. Translate the **item names** (fruit, tools, clothing, furniture — also baked
+   into `foresta.rel` as fixed 16-byte record tables). The German names come
+   from a different PAL overlay (`forestd.rel`); both linker maps list all 18
+   tables at the same sizes and slot order, so the German bytes are copied
+   verbatim slot-for-slot into the module patched in step 5. The same step
+   suppresses the item articles (zeroes the `itemArt_*` tables): the engine's
+   English a/an/the model can't express German gender/case, so items read as
+   bare names rather than a mis-gendered "eine Apfel".
 
 Full technical detail — every gotcha, the exact control-code tables, and the
 reasoning behind each fix — is in `CLAUDE.md`.
@@ -79,7 +89,7 @@ reasoning behind each fix — is in `CLAUDE.md`.
 |---|---|---|
 | `isos/` | Your source ISOs (not included) | no |
 | `extracted/` | Raw disc/archive extracts | no (regenerated) |
-| `maps/` | Entry/tag/label mapping JSONs | **yes** — `entry_map_v2.json` isn't regenerable by the current scripts (`rel_label_map.json` is, via `make_rel_label_map.py`) |
+| `maps/` | Entry/tag/label/item mapping JSONs | **yes** — `entry_map_v2.json` isn't regenerable by the current scripts (`rel_label_map.json` is, via `make_rel_label_map.py`; `rel_item_map.json` via `make_rel_item_map.py`) |
 | `build/` | Rebuilt text banks | no (regenerated) |
 | `output/` | Final arcs + ISO | no (regenerated) |
 
