@@ -76,7 +76,7 @@ def convert(m, dropped):
                 dropped[tk] += 1
             i += sz
         else:
-            out.append(c); i += 1
+            out.append(PAL_TEXT_REMAP.get(c, c)); i += 1   # remap „…" -> "
     return bytes(out)
 
 def load_us_bank(b):

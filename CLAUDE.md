@@ -41,10 +41,12 @@ house). Select = port settings overlay, Select+Start = quit.
 ```
 
 Verified reproducible: full re-run yields a bit-identical ISO
-(sha1 `dbdff1c00790243594a3f7e84ac791574505f8cd`, v13 build: v12 + German item
-names patched into `foresta.rel` by p15, now with full charmap coverage — 2271
+(sha1 `c59c004f5930bbe2a02d0c3c395c2a3b46de84ce`, v13 build: v12 + German item
+names patched into `foresta.rel` by p15 with full charmap coverage — 2271
 names, incl. capital-umlaut/eszett glyphs 0x02/0x17/0x1d that the earlier
-2239-name `3a00f5555c…` build dropped). The prior v12 sha1 was
+2239-name build dropped — plus the PAL curly-quote remap in the dialog banks
+(see gotcha). The prior 2271-name-only sha1 was `dbdff1c00790…`. The prior v12
+sha1 was
 `296f945caea92f506cb36e2891f12a2a9b0ed1ae` (v11 + German menu labels by p14; the
 ISO grew 32.7 MB → 39.0 MB because `build_iso` appends the re-Yaz0'd module and
 the stock one stays as dead disc bytes, like the appended arcs). The pre-rel sha1 was
@@ -121,6 +123,14 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
   16272 is US-only — these 4 legitimately stay English.
 - BMG DAT1: bound messages by next-largest offset, then `rstrip(b"\0")`;
   naive zero-scan misreads tag payloads and can walk megabytes.
+- PAL dialog wraps quoted words in typographic quote glyphs „…" (bytes 0xD6
+  open / 0xD5 close), but the US module's font has NO glyph there, so they
+  render as blank gaps ("seltsam  ?" instead of "seltsam"?). The US font quotes
+  with plain ASCII 0x22 (the English bank uses it, e.g. "mad cool"), so
+  `msglib.PAL_TEXT_REMAP` maps 0xD6/0xD5 → 0x22 in the passthrough (text) branch
+  of both convert()s (p8 main bank + p11 secondary banks) — never on control-code
+  payloads. ~420 quoted phrases affected. Any residual 0xD6/0xD5 in the built
+  banks is US-native (English-kept entries) and renders fine.
 - PAL character encoding == US encoding (umlauts included); only the control
   code/tag systems differ. Font charmap glyph bytes seen in the menu labels:
   ä=0x5d, ö=0x8c, ü=0x92, Ä=0x02, Ö=0x17 (so always copy German bytes verbatim

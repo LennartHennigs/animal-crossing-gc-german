@@ -149,7 +149,7 @@ def convert(m, maps, dropped):
                 dropped[tk] = dropped.get(tk, 0) + 1
             i += sz
         else:
-            out.append(c); i += 1
+            out.append(PAL_TEXT_REMAP.get(c, c)); i += 1   # remap „…" -> "
     return bytes(out)
 
 def main():

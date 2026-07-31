@@ -19,6 +19,14 @@ CC_SIZE = [
     0x03,0x02,0x02,0x02,0x02,0x02,0x02,0x04,0x04,0x0C,0x0E,0x02,0x03,
 ]
 
+# PAL dialog text wraps quoted words in typographic quotation marks „…" (bytes
+# 0xD6 open / 0xD5 close). The US module's font has no glyph at those codepoints,
+# so they render as blank gaps ("seltsam  ?" instead of a quoted „seltsam"?).
+# The US font quotes with plain ASCII 0x22, as the English bank does ("mad cool"),
+# so remap PAL text quotes to it. Apply ONLY to copied *text* bytes in convert()'s
+# passthrough branch — never to control-code payloads (0x80 tags handle those).
+PAL_TEXT_REMAP = {0xD6: 0x22, 0xD5: 0x22}
+
 def load_bmg(path):
     """PAL msg.bin: ROOT wrapper at 0x0, MESGbmg1 at 0x100. Returns raw message bytes."""
     bmg = open(path, "rb").read()
