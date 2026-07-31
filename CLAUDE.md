@@ -36,6 +36,9 @@ house). Select = port settings overlay, Select+Start = quit.
 
 ## Reproduce
 
+Requirements: Python 3 with **stdlib only** (`json`/`os`/`struct`/`collections`)
+— no pip installs. Both source ISOs must be present in `isos/` (see config.py).
+
 ```bash
 ./build.sh   # p8 -> p10 -> p11 -> p14 -> p15 -> p13, prints the final ISO sha1
 ```
