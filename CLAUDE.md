@@ -262,6 +262,22 @@ Left untouched for now; documented so it can be picked up later. US targets in
 bitmaps → in-place same-size swap into `foresta.rel` → reuse p14 re-Yaz0 path →
 build → test on a FRESH game.
 
+### TODO: multi-line "muttered aside" scale span (deferred cosmetic)
+Some PAL asides (e.g. Tom Nook "Kostenlos! / Ich wäre es sowieso / nie im Leben
+losgeworden…") are meant to render smaller across the whole aside, but only the
+FIRST line shrinks in our build; line 2 snaps back to normal. Diagnosis (codes
+confirmed from ac-decomp `m_font.h`): the shrink is emitted as `SET_LINE_SCALE`
+(0x5A), which the engine **resets at every newline** (0xCD), so a 2-line span
+only affects the line carrying the code. The faithful fix is `SET_CHAR_SCALE`
+(0x54, persists across newlines) held over the span **with a matching 0x54
+reset** afterwards — but the PAL reset comes via generic tags (`5,5,0`→`7f04`,
+`5,6,0`→`7f0900…`) used tens of thousands of times, so a global tag-map remap is
+high-risk. Only **2** such multi-line line-scale spans exist in the whole build
+(measured), so it's low-value. Safer future approach: a targeted post-convert
+pass that re-emits the active `7f 5a <n>` after an intervening `0xCD` **only**
+while text continues and stops at the next control code — verify both spans in
+Dolphin on a fresh game. Left as-is for now (readable; purely cosmetic).
+
 ## History (v2/v3, superseded packers)
 
 `rarc.py` base bug (wrong data-area base offset) invalidated the v1 chain/dialog machinery.
