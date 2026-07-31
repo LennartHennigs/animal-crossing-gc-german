@@ -41,8 +41,10 @@ house). Select = port settings overlay, Select+Start = quit.
 ```
 
 Verified reproducible: full re-run yields a bit-identical ISO
-(sha1 `3a00f5555c608b8f69f12b666bd023cd8e6b2d27`, v13 build: v12 + German item
-names patched into `foresta.rel` by p15). The prior v12 sha1 was
+(sha1 `dbdff1c00790243594a3f7e84ac791574505f8cd`, v13 build: v12 + German item
+names patched into `foresta.rel` by p15, now with full charmap coverage — 2271
+names, incl. capital-umlaut/eszett glyphs 0x02/0x17/0x1d that the earlier
+2239-name `3a00f5555c…` build dropped). The prior v12 sha1 was
 `296f945caea92f506cb36e2891f12a2a9b0ed1ae` (v11 + German menu labels by p14; the
 ISO grew 32.7 MB → 39.0 MB because `build_iso` appends the re-Yaz0'd module and
 the stock one stays as dead disc bytes, like the appended arcs). The pre-rel sha1 was
