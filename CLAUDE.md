@@ -133,8 +133,10 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
   banks is US-native (English-kept entries) and renders fine.
 - PAL character encoding == US encoding (umlauts included); only the control
   code/tag systems differ. Font charmap glyph bytes seen in the menu labels:
-  ä=0x5d, ö=0x8c, ü=0x92, Ä=0x02, Ö=0x17 (so always copy German bytes verbatim
+  ä=0x5d, ö=0x8c, ü=0x92, Ä=0x02, Ö=0x17, ß=0x1d (so always copy German bytes verbatim
   from the German module — never hand-type umlauts).
+  NOTE: Ä/Ö/ß sit BELOW 0x20, so any "printable >= 0x20" filter must whitelist
+  them (0x02/0x17/0x1d) or it silently drops those names (bit us in p15's is_real).
 - Action/selection menu labels (Grab/Quit/Give Away/Bells/Yes/No…) are NOT in
   the 11 message banks — they live in `foresta.rel` (the Yaz0 module the arc
   pipeline never touched) as fixed 20-byte records: 16-byte space-padded text +
@@ -179,6 +181,9 @@ append-style v2/v3 packers (p9, p12, `forest_*_de.arc`, `forest_2nd_de_v3.arc`).
   savegame or Dolphin save state caches the old module's strings in its state,
   so patched labels still render English until a new game — cost a debugging
   cycle here. (Same spirit as the Anbernic "no save states" rule.)
+- Boot the built ISO in Dolphin for visual checks:
+  `/Applications/Dolphin.app/Contents/MacOS/Dolphin -e "output/Animal Crossing (USA) [German].iso"`.
+  Reload the ISO after each rebuild (a running instance keeps the old one).
 - Flow-critical control codes (choice menu 0x0D, next-message links 0x0E-0x15,
   select strings 0x16-0x18, 0x5E/0x62/0x63/0x77-0x7A) can't be learned from PAL
   tags: select-string payloads vary per message and PAL restructures some
@@ -243,6 +248,10 @@ US ones, so a byte-for-byte swap into `foresta.rel` is viable). Pull any German
 module/map from `extracted/german.tgc` via the p10 TGC-extract logic.
 
 **REL / Yaz0 mechanics** (for editing modules):
+- US 0x7F control-code byte == its index in the `mFont_CONT_CODE_*` enum in
+  ac-decomp `include/m_font.h` (fetch via GitHub MCP `get_file_contents
+  ACreTeam/ac-decomp`). Confirmed: 0x50=SET_COLOR_CHAR, 0x53=SET_LINE_TYPE,
+  0x54=SET_CHAR_SCALE (persists), 0x5A=SET_LINE_SCALE (resets each newline).
 - `relpack.py` handles the Yaz0 wrapper; `foresta.map`/`forestd.map` (extract
   from the ISO / german.tgc) are the code+data symbol maps — grep them to
   locate named symbols (functions, textures) with address+size.
